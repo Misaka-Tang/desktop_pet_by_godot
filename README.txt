@@ -5,6 +5,6 @@ Three features
 2)upload pet materials in application
 3)remove pet from application
 
-You can edit game project by yourself.
+You can edit game project by yourself using GDscript.
 
 All documents which are game project file and application. You can open 'project.godot' to edit application and export in different platform as originally deploy application on macOS.  
