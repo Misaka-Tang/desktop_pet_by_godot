@@ -1,0 +1,163 @@
+[gd_scene load_steps=14 format=3 uid="uid://b4yscwnlb6250"]
+
+[ext_resource type="SpriteFrames" uid="uid://dcvpjfpxv6x7w" path="res://pets/cat_res.tres" id="1_8bhxa"]
+[ext_resource type="Script" path="res://sences/animated_sprite_2d.gd" id="1_kmvww"]
+[ext_resource type="Script" path="res://sences/Area2D.gd" id="2_234q6"]
+[ext_resource type="Texture2D" uid="uid://cjbws82fi4a8c" path="res://resource/setting_icon.png" id="4_bwrjo"]
+
+[sub_resource type="GDScript" id="GDScript_losny"]
+script/source = "extends AnimatedSprite2D
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r7lwj"]
+size = Vector2(223, 308)
+
+[sub_resource type="Theme" id="Theme_okk7l"]
+default_font_size = 20
+
+[sub_resource type="Theme" id="Theme_7nqla"]
+default_base_scale = 0.25
+default_font_size = 20
+
+[sub_resource type="Theme" id="Theme_wwjq4"]
+default_font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_s7krk"]
+font_size = 20
+
+[sub_resource type="Theme" id="Theme_fpnys"]
+default_font_size = 20
+
+[sub_resource type="Theme" id="Theme_ss0g5"]
+default_font_size = 20
+
+[sub_resource type="Theme" id="Theme_57hw3"]
+default_font_size = 20
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(180, 105)
+script = ExtResource("1_kmvww")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(393, 275)
+script = ExtResource("2_234q6")
+metadata/_edit_group_ = true
+
+[node name="pet" type="AnimatedSprite2D" parent="Area2D"]
+position = Vector2(97, 0)
+sprite_frames = ExtResource("1_8bhxa")
+animation = &"click"
+autoplay = "idel"
+script = SubResource("GDScript_losny")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_r7lwj")
+
+[node name="setting_btn" type="Button" parent="."]
+offset_left = 97.0
+offset_top = 121.0
+offset_right = 278.0
+offset_bottom = 216.0
+theme = SubResource("Theme_okk7l")
+text = "Setting"
+icon = ExtResource("4_bwrjo")
+
+[node name="settingPanel" type="TabContainer" parent="."]
+visible = false
+offset_left = 92.0
+offset_top = 5.0
+offset_right = 854.0
+offset_bottom = 492.0
+
+[node name="pets pool" type="GridContainer" parent="settingPanel"]
+layout_mode = 2
+columns = 3
+
+[node name="removePetBt" type="Button" parent="settingPanel/pets pool"]
+layout_mode = 2
+theme = SubResource("Theme_7nqla")
+theme_override_colors/font_color = Color(0.73, 0.60079, 0.2993, 1)
+text = "remove pet"
+
+[node name="addNewPet" type="GridContainer" parent="settingPanel"]
+visible = false
+layout_mode = 2
+columns = 2
+
+[node name="uploadLal" type="Label" parent="settingPanel/addNewPet"]
+layout_mode = 2
+text = "Upload different status of your pet in such side,
+please upload idel, click, drag three status. "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="upload" type="Button" parent="settingPanel/addNewPet"]
+layout_mode = 2
+theme = SubResource("Theme_wwjq4")
+text = "Upload"
+
+[node name="petNameEdTxt" type="TextEdit" parent="settingPanel/addNewPet"]
+layout_mode = 2
+placeholder_text = "please name your new pet.
+"
+
+[node name="petNameLal" type="Label" parent="settingPanel/addNewPet"]
+layout_mode = 2
+text = "Pet name"
+label_settings = SubResource("LabelSettings_s7krk")
+horizontal_alignment = 1
+
+[node name="idelStausLal" type="TextEdit" parent="settingPanel/addNewPet"]
+layout_mode = 2
+placeholder_text = "upload your pet's idel status."
+editable = false
+
+[node name="idelStausBt" type="Button" parent="settingPanel/addNewPet"]
+layout_mode = 2
+theme = SubResource("Theme_fpnys")
+text = "..."
+
+[node name="clickStausLal" type="TextEdit" parent="settingPanel/addNewPet"]
+layout_mode = 2
+placeholder_text = "upload your pet's click status.
+"
+editable = false
+
+[node name="clickStausBt" type="Button" parent="settingPanel/addNewPet"]
+layout_mode = 2
+theme = SubResource("Theme_ss0g5")
+text = "..."
+
+[node name="dragStausLal" type="TextEdit" parent="settingPanel/addNewPet"]
+layout_mode = 2
+placeholder_text = "upload your pet's drag status."
+editable = false
+
+[node name="dragStausBt" type="Button" parent="settingPanel/addNewPet"]
+layout_mode = 2
+theme = SubResource("Theme_57hw3")
+text = "..."
+
+[node name="filedialog" type="FileDialog" parent="settingPanel/addNewPet"]
+title = "Open File(s)"
+initial_position = 2
+size = Vector2i(700, 500)
+ok_button_text = "Open"
+file_mode = 1
+access = 2
+filters = PackedStringArray("PNG", "png", "JPG", "jpg", "SVG")
+use_native_dialog = true
+
+[node name="close[X]" type="Button" parent="settingPanel"]
+visible = false
+layout_mode = 2
+text = "close setting panel"
+
+[connection signal="pressed" from="setting_btn" to="." method="_on_setting_btn_pressed"]
+[connection signal="pressed" from="settingPanel/addNewPet/upload" to="." method="_on_upload_pressed"]
+[connection signal="pressed" from="settingPanel/addNewPet/idelStausBt" to="." method="_on_idel_staus_bt_pressed"]
+[connection signal="pressed" from="settingPanel/addNewPet/clickStausBt" to="." method="_on_click_staus_bt_pressed"]
+[connection signal="pressed" from="settingPanel/addNewPet/dragStausBt" to="." method="_on_drag_staus_bt_pressed"]
+[connection signal="files_selected" from="settingPanel/addNewPet/filedialog" to="." method="_on_filedialog_files_selected"]
+[connection signal="pressed" from="settingPanel/close[X]" to="." method="_on_close_x_pressed"]
